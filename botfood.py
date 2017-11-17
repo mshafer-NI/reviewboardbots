@@ -82,8 +82,8 @@ class BotFood:
         with open(os.path.join(path, 'request_metadata.json'), 'w') as outfile:
             json.dump(request['metadata'], outfile)
 
-        for diff in request['diffs']:
-            self.save_diff(request['metadata']['id'], diff, os.path.join(path, "revision" + str(diff['revision'])))
+        highest_version = max([int(diff['revision']) for diff in request['diffs']])
+        self.save_diff(request['metadata']['id'], diff, os.path.join(path, "revision" + str(highest_version)))
 
         return path
 
