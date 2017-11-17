@@ -6,8 +6,7 @@ setup(name='reviewboardbots',
       description='The best ever review bot system',
       author='Zach and Tim',
       install_requires=[
-          'RBTools',
-          'sh',
+          'RBTools',        
           'tinydb', 'pyyaml',
       ],
       )
