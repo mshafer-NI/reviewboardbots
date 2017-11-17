@@ -29,11 +29,12 @@ class WatcherMemory:
             Request = Query()
 
             reviewers = [bot.title for bot in raw_request.target_people if bot.title in self.bot_name_list]
+            request_groups = raw_request.target_groups if raw_request.target_groups is not None else []
             groups = [our_bot
                       for our_bot in self.bot_name_list
                       if any(group.title
                              in self.bot_list[our_bot]
-                             for group in raw_request.target_groups)]
+                             for group in request_groups)]
 
             request = {
                 "id": raw_request["id"],
