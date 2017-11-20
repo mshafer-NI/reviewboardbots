@@ -23,10 +23,12 @@ class Watcher:
 
         self.bot_name_list = config.config['bots'].keys()
 
-        self.bot_group_list = {bot_name: config.config['bots'][bot_name]['groups']
-                               if 'groups' in config.config['bots'][bot_name]
-                               else []
+        
+        self.bot_group_list = {bot_name: []
                                for bot_name in self.bot_name_list}
+        for bot_name in self.bot_group_list:
+            if 'groups' in config.config['bots'][bot_name]:
+                self.bot_group_list[bot_name] = config.config['bots'][bot_name]['groups']
 
         self.bot_manager = bot_manager
         self.requests_seen = {}
