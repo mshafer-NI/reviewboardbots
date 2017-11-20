@@ -1,7 +1,7 @@
 import os, os.path
 import json
 import urllib
-
+import operator
 
 class BotFood:
     """It\'s what bots crave!!!"""
@@ -82,8 +82,15 @@ class BotFood:
         with open(os.path.join(path, 'request_metadata.json'), 'w') as outfile:
             json.dump(request['metadata'], outfile)
 
-        highest_version = max([int(diff['revision']) for diff in request['diffs']])
-        self.save_diff(request['metadata']['id'], diff, os.path.join(path, "revision" + str(highest_version)))
+        # highest_version = max([int(diff['revision']) for diff in request['diffs']])
+        max_revision = -1
+        highest_diff = None
+        for diff in request['diffs']:
+            if diff['revision'] > max_revision:
+                max_revision = diff['revision']
+                highest_diff = diff
+        # diff, highest_version = max(enumerate([(diff, int(diff['revision'])) for diff in request['diffs']]), key=operator.itemgetter(1))
+        self.save_diff(request['metadata']['id'], highest_diff, os.path.join(path, "revision" + str(max_revision)))
 
         return path
 
